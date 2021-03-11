@@ -4,6 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>萬年曆</title>
+  <style>
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 700px;
+  }
+  .list > .date {
+    width: 100px;
+    height: 50px
+  }
+  .list > .fadeout {
+    opacity: 0.3;
+  }
+  </style>
 </head>
 <body>
   <h3 id="year-month"></h3>
@@ -23,18 +37,38 @@
     function render() {
       let head = document.querySelector('#year-month')
       head.textContent = state.current.getFullYear() + '/' + (state.current.getMonth() + 1)
-      let date = new Date(state.current.getFullYear(), state.current.getMonth(), 1) 
+      let list = document.querySelector('#list')
+      // 先取的這個月的第一天
+      let firstDate = new Date(state.current.getFullYear(), state.current.getMonth(), 1)
+      // 往前算到星期日
+      let date = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1)
+      date.setDate(date.getDate() - date.getDay())
+      
+
+      // 畫出上個月的後幾天
+      while (date<firstDate) {
+        renderData(date, list)
+        date.setDate(date.getDate() + 1)
+      }
+      
+      // 畫出這個月的日期
       while (date.getMonth() === state.current.getMonth()) {
         // 畫出一天的格子
         renderData(date, list)
         // 日期 + 1
         date.setDate(date.getDate() + 1)
       }
+
+      // 畫出下個月的前幾天
+      while (date.getDay()>0) {
+        renderData(date, list)
+        date.setDate(date.getDate() + 1)
+      }
     }
 
     function renderData(date, list) {
       let cell = document.createElement('div')
-      cell.className = 'date'
+      cell.className = 'date' + (date.getMonth() === state.current.getMonth() ? '' : ' fadeout')
       cell.textContent = date.getDate()
       list.appendChild(cell)
     }
