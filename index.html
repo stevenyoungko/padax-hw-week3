@@ -24,13 +24,18 @@
     <div class="main-container">
       <div class="list"></div>
     </div>
+    <div class=button-container>
+      <button class="button" onclick="addData()">Load More</button>
+    </div>
   </div>
   <script>
     let state = null
 
     function init() {
       state = {
-        dataList: []
+        dataList: [],
+        countStart: 0,
+        conutEnd: 8
       }
 
       render()
@@ -40,14 +45,17 @@
       let url = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions.json'
       const response = await fetch(url)
       const { result } = await response.json()
-      state.dataList = result.results.slice(0,8)
+      state.dataList = result.results
+
+      console.log(state.dataList)
 
       let list = document.querySelector('.list')
       state.dataList.forEach((item, index) => {
-        renderData(item, list)
+        if (index + 1 > state.countStart && index + 1 <= state.conutEnd) {
+          renderData(item, list)
+        }
       })
     }
-
 
     function renderData(item, list) {
       let divCell = document.createElement('div')
@@ -66,6 +74,18 @@
 
     function getImage(url) {
       return url.split('jpg')[0] + 'jpg'
+    }
+
+    function addData() {
+      let list = document.querySelector('.list')
+      state.countStart += 8
+      state.conutEnd += 8
+      state.dataList.forEach((item, index) => {
+        if (index + 1 > state.countStart && index + 1 <= state.conutEnd) {
+          console.log(index)
+          renderData(item, list)
+        }
+      })
     }
 
     init()

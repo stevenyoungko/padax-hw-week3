@@ -48,6 +48,7 @@
   justify-content: center;
   flex-wrap: wrap;
   width: 90%;
+  margin-top: 20px;
 }
 @media screen and (min-width: 1201px) {
   .main-container .list {
@@ -84,4 +85,15 @@
   justify-content: center;
   align-items: center;
   height: 70px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.button-container .button {
+  height: 40px;
+  width: 100px;
 }
