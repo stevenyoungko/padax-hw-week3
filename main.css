@@ -70,10 +70,18 @@
     width: 276px
   }
 }
+.main-container .item .image {
+  height: 250px;
+  width: 100%;
+}
+
 .main-container .title {
+  margin-top: 0;
   text-align: center;
   background-color: aliceblue;
   font-size: 20px;
-  height: 50px;
-  line-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
 }

@@ -22,41 +22,53 @@
       <h1 class="title">Welcome to MyHome</h1>
     </div>
     <div class="main-container">
-      <div class="list">
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title1</h3>
-        </div>
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title2</h3>
-        </div>
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title3</h3>
-        </div>
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title4</h3>
-        </div>
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title5</h3>
-        </div>
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title6</h3>
-        </div>
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title7</h3>
-        </div>
-        <div class="item">
-          <img alt="Vue logo" src="./logo.png">
-          <h3 class="title">Title8</h3>
-        </div>
-      </div>
+      <div class="list"></div>
     </div>
   </div>
+  <script>
+    let state = null
+
+    function init() {
+      state = {
+        dataList: []
+      }
+
+      render()
+    }
+
+    async function render() {
+      let url = 'https://padax.github.io/taipei-day-trip-resources/taipei-attractions.json'
+      const response = await fetch(url)
+      const { result } = await response.json()
+      state.dataList = result.results.slice(0,8)
+
+      let list = document.querySelector('.list')
+      state.dataList.forEach((item, index) => {
+        renderData(item, list)
+      })
+    }
+
+
+    function renderData(item, list) {
+      let divCell = document.createElement('div')
+      let imageCell = document.createElement('img')
+      let h3Cell = document.createElement('h3')
+
+      divCell.className = 'item'
+      imageCell.src = getImage(item.file)
+      imageCell.className = 'image'
+      h3Cell.className = 'title'
+      h3Cell.textContent = item.stitle
+      list.append(divCell)
+      divCell.append(imageCell)
+      divCell.append(h3Cell)
+    }
+
+    function getImage(url) {
+      return url.split('jpg')[0] + 'jpg'
+    }
+
+    init()
+  </script>
 </body>
 </html>
