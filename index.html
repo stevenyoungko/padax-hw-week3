@@ -82,7 +82,6 @@
       state.conutEnd += 8
       state.dataList.forEach((item, index) => {
         if (index + 1 > state.countStart && index + 1 <= state.conutEnd) {
-          console.log(index)
           renderData(item, list)
         }
       })
